@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maia Ardalla — Writer, Researcher, Creative Practitioner</title>
+<meta name="description" content="The personal site of Maia Ojerinde Ardalla — writer, researcher and creative practitioner. Outreach Manager at the British Film Institute.">
+<style>
+/* ────────────────────────────────────────────────────────────
+   Maia Ardalla · personal site
+   editorial serif · oklch warm palette · asymmetric grid
+   ──────────────────────────────────────────────────────────── */
+
+/* TOKENS — OKLCH harmonised editorial palette ──────────────── */
+:root {
+  /* paper & ink */
+  --paper:           oklch(96.5% 0.012 78);
+  --paper-deeper:    oklch(93.0% 0.018 72);
+  --paper-deepest:   oklch(87.0% 0.024 68);
+  --ink:             oklch(20.5% 0.022 50);
+  --ink-soft:        oklch(36.0% 0.022 55);
+  --ink-faint:       oklch(54.0% 0.018 60);
+  --rule:            oklch(80.0% 0.020 65);
+  --rule-deep:       oklch(66.0% 0.025 60);
+
+  /* warm primary & accents */
+  --terracotta:      oklch(56.0% 0.155 38);
+  --terracotta-deep: oklch(40.0% 0.130 34);
+  --ochre:           oklch(72.0% 0.115 70);
+  --ink-blue:        oklch(38.0% 0.110 250);
+
+  /* dark register (for full-bleed Poetry section) */
+  --deep:            oklch(22.5% 0.030 38);
+  --deep-paper:      oklch(94.0% 0.022 76);
+  --deep-faint:      oklch(70.0% 0.030 76);
+
+  /* type stacks — editorial serif first, no system-ui */
+  --serif-display: 'Hoefler Text', 'Big Caslon', 'Cormorant Garamond',
+                   Constantia, 'Iowan Old Style', Georgia,
+                   'Times New Roman', serif;
+  --serif-body:    'Iowan Old Style', 'Hoefler Text', Charter,
+                   Constantia, Cambria, Georgia,
+                   'Times New Roman', serif;
+  --sans:          'Helvetica Neue', Helvetica, 'Arial Narrow', Arial, sans-serif;
+
+  /* rhythm */
+  --max:        96rem;
+  --gutter:     clamp(1.25rem, 4vw, 4rem);
+  --section-y:  clamp(5rem, 12vh, 12rem);
+
+  /* motion */
+  --ease: cubic-bezier(.2,.6,.2,1);
+  --dur:  520ms;
+}
+
+/* RESET ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body, h1, h2, h3, h4, p, ol, ul, blockquote, figure { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+::selection { background: var(--terracotta); color: var(--paper); }
+
+/* BASE ──────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--serif-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.55;
+  font-feature-settings: "kern", "liga", "calt", "onum";
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* paper grain — very subtle SVG noise on the base */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.32  0 0 0 0 0.20  0 0 0 0 0.12  0 0 0 0.045 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* TYPE ──────────────────────────────────────────────────────── */
+.display {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  font-feature-settings: "kern", "liga", "dlig", "salt", "onum";
+}
+.kicker {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+.lede {
+  font-family: var(--serif-body);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+em, .italic { font-style: italic; }
+.small-caps {
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+}
+
+/* LAYOUT PRIMITIVES ────────────────────────────────────────── */
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  position: relative;
+}
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1rem, 2.4vw, 2.4rem);
+}
+
+/* ────────────────────────────────────────────────────────────
+   MASTHEAD
+   ──────────────────────────────────────────────────────────── */
+.masthead {
+  padding-block: clamp(1.25rem, 2.4vw, 2rem);
+  border-bottom: 1px solid var(--rule);
+}
+.masthead .wrap {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 2rem;
+}
+.wordmark {
+  font-family: var(--serif-display);
+  font-size: 1.125rem;
+  letter-spacing: 0.005em;
+  font-style: italic;
+  color: var(--ink);
+}
+.wordmark::before {
+  content: "❦  ";
+  color: var(--terracotta);
+  font-style: normal;
+}
+.colophon-nav {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  color: var(--ink-soft);
+}
+.colophon-nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .55rem;
+  padding-block: .25rem;
+  transition: color var(--dur) var(--ease);
+  position: relative;
+}
+.colophon-nav a span {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: .82rem;
+  color: var(--terracotta);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.colophon-nav a:hover,
+.colophon-nav a:focus-visible { color: var(--ink); outline: none; }
+.colophon-nav a:focus-visible { box-shadow: 0 2px 0 0 var(--terracotta); }
+
+/* ────────────────────────────────────────────────────────────
+   HERO
+   ──────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding-block: clamp(3.5rem, 9vh, 8rem) clamp(3rem, 7vh, 6rem);
+  min-height: 88vh;
+  display: grid;
+  align-content: space-between;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 88% -10%, oklch(88% 0.04 60 / .55), transparent 55%),
+    radial-gradient(80% 60% at -10% 110%, oklch(86% 0.05 40 / .35), transparent 60%);
+}
+.hero__top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+}
+.hero__top .kicker:first-child::before {
+  content: "§ ";
+  color: var(--terracotta);
+}
+.hero__title {
+  font-size: clamp(4.5rem, 16.5vw, 17rem);
+  margin-top: clamp(2rem, 5vh, 4rem);
+}
+.hero__title .l1 {
+  display: block;
+}
+.hero__title .l2 {
+  display: block;
+  font-style: italic;
+  text-align: right;
+  margin-top: -.05em;
+  color: var(--terracotta-deep);
+}
+/* asymmetric placement of surname */
+@media (min-width: 880px) {
+  .hero__title .l2 {
+    padding-right: clamp(0rem, 4vw, 4rem);
+  }
+  .hero__title .l1 {
+    padding-left: clamp(0rem, 2vw, 2.5rem);
+  }
+}
+
+.hero__foot {
+  margin-top: clamp(3rem, 7vh, 6rem);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+}
+.hero__tag {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  color: var(--ink);
+  max-width: 22ch;
+  line-height: 1.3;
+}
+.hero__tag em {
+  font-style: normal;
+  color: var(--terracotta-deep);
+}
+.hero__ornament {
+  align-self: end;
+  text-align: center;
+  color: var(--terracotta);
+  font-family: var(--serif-display);
+  font-size: 1.6rem;
+  letter-spacing: .6em;
+  padding-inline: 1rem;
+}
+.hero__meta {
+  text-align: right;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  color: var(--ink-soft);
+  line-height: 1.8;
+}
+.hero__meta strong { color: var(--ink); font-weight: 500; }
+.hero__meta span { display: block; }
+
+/* ornamental mark in upper-right */
+.hero__mark {
+  position: absolute;
+  top: clamp(2rem, 5vh, 4rem);
+  right: var(--gutter);
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: .76rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* large pale character behind hero (typographic motif) */
+.hero__glyph {
+  position: absolute;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(20rem, 50vw, 56rem);
+  line-height: .8;
+  color: oklch(56% 0.155 38 / 0.06);
+  bottom: -20%;
+  left: -8%;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.hero > .wrap { position: relative; z-index: 1; }
+
+/* ────────────────────────────────────────────────────────────
+   SECTION SCAFFOLD
+   ──────────────────────────────────────────────────────────── */
+.section {
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--rule);
+  position: relative;
+}
+.section__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: end;
+  margin-bottom: clamp(2.5rem, 6vh, 5rem);
+}
+.section__index {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  color: var(--terracotta);
+  line-height: 0.9;
+  letter-spacing: -.02em;
+}
+.section__index::after {
+  content: " ·";
+  color: var(--ink-faint);
+}
+.section__title {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  line-height: .94;
+  letter-spacing: -.03em;
+}
+.section__rubric {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--ink-faint);
+  text-align: right;
+  max-width: 18ch;
+  margin-left: auto;
+  line-height: 1.55;
+}
+
+/* ────────────────────────────────────────────────────────────
+   ABOUT
+   ──────────────────────────────────────────────────────────── */
+.about {
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-deeper) 100%);
+}
+.about__body {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1rem, 2.4vw, 2.4rem);
+  row-gap: clamp(2rem, 5vh, 4rem);
+}
+.about__lede {
+  grid-column: 2 / span 8;
+  font-family: var(--serif-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  line-height: 1.18;
+  letter-spacing: -.012em;
+  color: var(--ink);
+  font-style: italic;
+}
+.about__lede em {
+  font-style: normal;
+  color: var(--terracotta-deep);
+}
+.about__col-a {
+  grid-column: 2 / span 4;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.about__col-b {
+  grid-column: 7 / span 5;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.about__col-a p + p,
+.about__col-b p + p { margin-top: 1.1em; }
+
+/* drop cap */
+.dropcap::first-letter {
+  font-family: var(--serif-display);
+  float: left;
+  font-size: 4.6em;
+  line-height: 0.85;
+  padding: 0.05em 0.12em 0 0;
+  color: var(--terracotta);
+  font-style: italic;
+  font-feature-settings: "salt";
+}
+
+.pull {
+  grid-column: 3 / span 8;
+  margin-block: clamp(1.5rem, 4vh, 3rem);
+  padding-block: clamp(1.5rem, 3vh, 2.5rem);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  font-family: var(--serif-display);
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+  line-height: 1.18;
+  letter-spacing: -.012em;
+  color: var(--ink);
+  text-align: center;
+}
+.pull q { quotes: "“" "”" "‘" "’"; }
+.pull q::before {
+  content: open-quote;
+  display: block;
+  font-style: italic;
+  color: var(--terracotta);
+  font-size: 2.4em;
+  line-height: 0.4;
+  margin-bottom: .35em;
+  margin-top: .1em;
+}
+.pull q::after {
+  content: none;
+}
+.pull__by {
+  display: block;
+  margin-top: 1.2rem;
+  font-family: var(--sans);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  font-style: normal;
+}
+
+/* about meta-bar (sidebar facts) */
+.about__facts {
+  grid-column: 2 / span 10;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.about__facts dt {
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  font-size: 0.66rem;
+  color: var(--ink-faint);
+  margin-bottom: .35rem;
+}
+.about__facts dd {
+  margin: 0;
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+/* ────────────────────────────────────────────────────────────
+   PRACTICE (Work)
+   ──────────────────────────────────────────────────────────── */
+.practice__list {
+  display: grid;
+  row-gap: 0;
+}
+.practice__item {
+  display: grid;
+  grid-template-columns: 6rem 1fr auto;
+  align-items: baseline;
+  gap: clamp(1rem, 3vw, 3rem);
+  padding-block: clamp(1.8rem, 4vh, 2.8rem);
+  border-top: 1px solid var(--rule);
+  transition: background var(--dur) var(--ease);
+  position: relative;
+}
+.practice__item:last-child { border-bottom: 1px solid var(--rule); }
+.practice__item:hover { background: oklch(91% 0.025 70 / .35); }
+.practice__year {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  align-self: start;
+  padding-top: .55rem;
+}
+.practice__title-block { min-width: 0; }
+.practice__title {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3.4vw, 2.85rem);
+  line-height: 1.05;
+  letter-spacing: -.015em;
+  color: var(--ink);
+}
+.practice__role {
+  font-family: var(--serif-body);
+  font-style: italic;
+  color: var(--terracotta-deep);
+  font-size: 1.05rem;
+  margin-top: .35rem;
+  display: block;
+}
+.practice__desc {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 52ch;
+  margin-top: .8rem;
+}
+.practice__meta {
+  text-align: right;
+  align-self: start;
+  padding-top: .55rem;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+  line-height: 1.7;
+  white-space: nowrap;
+}
+.practice__meta a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.practice__meta a:hover { color: var(--terracotta); border-color: var(--terracotta); }
+
+/* ────────────────────────────────────────────────────────────
+   POETRY & PERFORMANCE  ·  full-bleed deep register
+   ──────────────────────────────────────────────────────────── */
+.poetry {
+  background: var(--deep);
+  color: var(--deep-paper);
+  border-top: none;
+  position: relative;
+  overflow: hidden;
+}
+.poetry::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 90% 0%, oklch(56% 0.16 38 / .25), transparent 55%),
+    radial-gradient(80% 60% at -10% 100%, oklch(38% 0.110 250 / .25), transparent 60%);
+}
+.poetry > .wrap { position: relative; z-index: 1; }
+
+.poetry .section__index { color: var(--ochre); }
+.poetry .section__index::after { color: var(--deep-faint); }
+.poetry .section__title { color: var(--deep-paper); }
+.poetry .section__rubric { color: var(--deep-faint); }
+.poetry__layout {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1rem, 2.4vw, 2.4rem);
+  row-gap: clamp(3rem, 6vh, 5rem);
+  align-items: start;
+}
+.poetry__feature {
+  grid-column: 1 / span 7;
+}
+.poetry__verse {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(1.7rem, 3.2vw, 2.75rem);
+  line-height: 1.22;
+  letter-spacing: -.012em;
+  color: var(--deep-paper);
+}
+.poetry__verse .v-line { display: block; }
+.poetry__verse .v-indent { padding-left: 1.8em; }
+.poetry__verse .v-indent-2 { padding-left: 3.6em; }
+.poetry__verse .v-mark {
+  color: var(--ochre);
+  font-style: normal;
+  margin-right: .35em;
+}
+
+.poetry__credit {
+  margin-top: 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--deep-faint);
+  line-height: 1.8;
+}
+.poetry__credit strong { color: var(--ochre); font-weight: 500; letter-spacing: .18em; }
+
+.poetry__side {
+  grid-column: 9 / span 4;
+  padding-top: clamp(.5rem, 2vh, 1.5rem);
+}
+.poetry__theme {
+  font-family: var(--serif-display);
+  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  line-height: .98;
+  letter-spacing: -.025em;
+  color: var(--ochre);
+  font-style: italic;
+}
+.poetry__theme::before {
+  content: "theme · ";
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: .68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--deep-faint);
+  margin-bottom: 1rem;
+}
+.poetry__note {
+  margin-top: 2rem;
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--deep-paper);
+  opacity: .85;
+  max-width: 32ch;
+}
+
+.poetry__divider {
+  grid-column: 1 / -1;
+  height: 1px;
+  background: oklch(70% 0.030 76 / .25);
+  margin-block: clamp(1rem, 3vh, 2rem);
+}
+
+.poetry__second {
+  grid-column: 1 / span 12;
+  display: grid;
+  grid-template-columns: 6rem 1fr auto;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: baseline;
+}
+.poetry__second .label {
+  font-family: var(--sans);
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: var(--deep-faint);
+}
+.poetry__second .body {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--deep-paper);
+  max-width: 60ch;
+  opacity: .9;
+}
+.poetry__second .meta {
+  font-family: var(--sans);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: var(--ochre);
+  white-space: nowrap;
+}
+
+/* ────────────────────────────────────────────────────────────
+   CORRESPONDENCE (Contact)
+   ──────────────────────────────────────────────────────────── */
+.contact__layout {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1rem, 2.4vw, 2.4rem);
+  row-gap: clamp(2rem, 4vh, 3rem);
+  align-items: end;
+}
+.contact__intro {
+  grid-column: 2 / span 6;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+.contact__intro em {
+  font-style: normal;
+  color: var(--terracotta-deep);
+}
+.contact__links {
+  grid-column: 2 / span 10;
+  margin-top: clamp(2rem, 5vh, 4rem);
+  display: grid;
+  gap: 0;
+}
+.contact__link {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--rule);
+  transition: padding var(--dur) var(--ease);
+}
+.contact__link:last-of-type { border-bottom: 1px solid var(--rule); }
+.contact__link .n {
+  font-family: var(--serif-display);
+  font-style: italic;
+  color: var(--terracotta);
+  font-size: 1.05rem;
+}
+.contact__link .name {
+  font-family: var(--serif-display);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  position: relative;
+}
+.contact__link .name::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 1px;
+  background: var(--terracotta);
+  margin-left: .4em;
+  vertical-align: middle;
+  transition: width var(--dur) var(--ease);
+}
+.contact__link:hover .name::after,
+.contact__link:focus-visible .name::after { width: 1.8em; }
+.contact__link:hover .name { color: var(--terracotta-deep); }
+.contact__link .arrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.25rem;
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.contact__link:hover .arrow {
+  color: var(--terracotta);
+  transform: translateX(.4rem);
+}
+.contact__link:focus-visible { outline: none; }
+.contact__link:focus-visible .name { color: var(--terracotta-deep); }
+
+.contact__closing {
+  grid-column: 2 / span 10;
+  margin-top: clamp(3rem, 6vh, 5rem);
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-faint);
+  text-align: right;
+}
+.contact__closing::before {
+  content: "— ";
+  color: var(--terracotta);
+}
+
+/* ────────────────────────────────────────────────────────────
+   FOOTER / COLOPHON
+   ──────────────────────────────────────────────────────────── */
+.colophon {
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(2rem, 4vh, 3rem);
+}
+.colophon .wrap {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: baseline;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.colophon a {
+  color: var(--ink-soft);
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.colophon a:hover { color: var(--terracotta); border-bottom-color: var(--terracotta); }
+.colophon__center {
+  text-align: center;
+  color: var(--terracotta);
+  font-family: var(--serif-display);
+  font-style: italic;
+  letter-spacing: .4em;
+}
+.colophon__right { text-align: right; }
+
+/* ────────────────────────────────────────────────────────────
+   REVEAL ANIMATIONS — opt-in via data attribute
+   ──────────────────────────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 900ms var(--ease), transform 900ms var(--ease);
+}
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ────────────────────────────────────────────────────────────
+   RESPONSIVE — desktop first, then collapse
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  body { font-size: 17px; }
+
+  .hero__foot {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .hero__ornament { text-align: left; padding-inline: 0; letter-spacing: .5em; }
+  .hero__meta { text-align: left; }
+
+  .section__head {
+    grid-template-columns: 1fr;
+    gap: .8rem;
+  }
+  .section__rubric { text-align: left; margin-left: 0; max-width: none; }
+
+  .about__lede { grid-column: 1 / -1; }
+  .about__col-a { grid-column: 1 / -1; }
+  .about__col-b { grid-column: 1 / -1; }
+  .pull { grid-column: 1 / -1; }
+  .about__facts { grid-column: 1 / -1; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+
+  .practice__item {
+    grid-template-columns: 4.5rem 1fr;
+    grid-template-rows: auto auto;
+    gap: .5rem 1.5rem;
+  }
+  .practice__meta {
+    grid-column: 1 / -1;
+    text-align: left;
+    padding-top: 1rem;
+    white-space: normal;
+  }
+
+  .poetry__feature { grid-column: 1 / -1; }
+  .poetry__side { grid-column: 1 / -1; }
+  .poetry__second { grid-template-columns: 1fr; gap: .5rem; }
+  .poetry__second .meta { white-space: normal; }
+
+  .contact__intro,
+  .contact__links,
+  .contact__closing { grid-column: 1 / -1; }
+  .contact__link { grid-template-columns: 2.5rem 1fr auto; gap: 1rem; }
+}
+@media (max-width: 560px) {
+  .colophon-nav { gap: 1rem; font-size: .68rem; letter-spacing: .14em; }
+  .colophon-nav a span { display: none; }
+  .colophon .wrap { grid-template-columns: 1fr; text-align: left; }
+  .colophon__center, .colophon__right { text-align: left; }
+  .hero__mark { display: none; }
+  .about__facts { grid-template-columns: 1fr; }
+  .pull { font-size: 1.45rem; }
+}
+
+/* ────────────────────────────────────────────────────────────
+   REDUCED MOTION
+   ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- MASTHEAD                                                  -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Maia Ardalla</a>
+    <nav class="colophon-nav" aria-label="Primary">
+      <a href="#about"><span>i.</span>About</a>
+      <a href="#practice"><span>ii.</span>Practice</a>
+      <a href="#poetry"><span>iii.</span>Poetry</a>
+      <a href="#contact"><span>iv.</span>Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- HERO                                                      -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="top" class="hero">
+  <div class="hero__glyph" aria-hidden="true">a</div>
+  <div class="hero__mark" aria-hidden="true">London · MMXXVI</div>
+
+  <div class="wrap">
+    <div class="hero__top">
+      <p class="kicker">Portfolio &nbsp;·&nbsp; Writer · Researcher</p>
+    </div>
+
+    <h1 class="display hero__title" data-reveal>
+      <span class="l1">Maia</span>
+      <span class="l2">Ardalla</span>
+    </h1>
+
+    <div class="hero__foot" data-reveal>
+      <p class="hero__tag">
+        Writer, <em>researcher</em>, &amp; creative practitioner — working across
+        film, architecture, museology and the spoken word.
+      </p>
+      <div class="hero__ornament" aria-hidden="true">✦ ✦ ✦</div>
+      <p class="hero__meta">
+        <span class="small-caps" style="color:var(--ink-faint)">Currently</span>
+        <span><strong>Outreach Manager</strong></span>
+        <span>British Film Institute</span>
+        <span>—</span>
+        <span>London &amp; elsewhere</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- I. ABOUT                                                  -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="about" class="section about">
+  <div class="wrap">
+    <header class="section__head" data-reveal>
+      <div class="section__index">i</div>
+      <h2 class="section__title">About</h2>
+      <p class="section__rubric">A short profile &amp; standing remarks</p>
+    </header>
+
+    <div class="about__body">
+      <p class="about__lede" data-reveal>
+        Maia Ojerinde Ardalla is a <em>writer, researcher and creative practitioner</em>
+        whose work moves between architecture, poetry, design, museology and film.
+      </p>
+
+      <div class="about__col-a dropcap" data-reveal>
+        <p>At the British Film Institute she leads outreach as Outreach Manager,
+        specialising in underserved audiences, creative programming and the
+        long, patient labour of cultural participation. Her practice is shaped
+        by co-design — working alongside emerging artists, communities and
+        young people, rather than for them.</p>
+      </div>
+
+      <div class="about__col-b" data-reveal>
+        <p>She has written for the V&amp;A Blog (<em>Show + Tell + Share</em>) and
+        sat as an expert panellist for New London Architecture, contributing to
+        <em>East Bank: A New Cultural Identity</em> in September 2022.</p>
+        <p>As a spoken word artist, she has performed at The Night Gallery in
+        Brixton Village for the London Festival of Architecture — a programme
+        that took <em>In Common</em> as its theme, and her work as one of its
+        clearest expressions.</p>
+      </div>
+
+      <blockquote class="pull" data-reveal>
+        <q>Creative practice as a mechanism and catalyst for socio-political transformation.</q>
+        <span class="pull__by">— a working principle</span>
+      </blockquote>
+
+      <dl class="about__facts" data-reveal>
+        <div>
+          <dt>Role</dt>
+          <dd>Outreach Manager, BFI</dd>
+        </div>
+        <div>
+          <dt>Practice</dt>
+          <dd>Co-design, programming, writing</dd>
+        </div>
+        <div>
+          <dt>Fields</dt>
+          <dd>Film, architecture, museology, poetry</dd>
+        </div>
+        <div>
+          <dt>Based in</dt>
+          <dd>London</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- II. PRACTICE                                              -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="practice" class="section practice">
+  <div class="wrap">
+    <header class="section__head" data-reveal>
+      <div class="section__index">ii</div>
+      <h2 class="section__title">Practice</h2>
+      <p class="section__rubric">Selected roles, panels &amp; commissions</p>
+    </header>
+
+    <ol class="practice__list" data-reveal>
+
+      <li class="practice__item">
+        <div class="practice__year">Present</div>
+        <div class="practice__title-block">
+          <h3 class="practice__title">British Film Institute</h3>
+          <span class="practice__role">Outreach Manager</span>
+          <p class="practice__desc">
+            Leading outreach for underserved audiences across the BFI's creative
+            programming — designing routes into film for those most often left
+            out of cultural life, and building the partnerships that hold those
+            routes open.
+          </p>
+        </div>
+        <div class="practice__meta">
+          Film&nbsp;/&nbsp;Programming<br>
+          London
+        </div>
+      </li>
+
+      <li class="practice__item">
+        <div class="practice__year">Ongoing</div>
+        <div class="practice__title-block">
+          <h3 class="practice__title">Co-design Leadership</h3>
+          <span class="practice__role">Across communities, sectors &amp; institutions</span>
+          <p class="practice__desc">
+            Leading co-design processes with emerging artists, communities and
+            young people — treating collaboration as a method rather than a
+            gesture, and creative practice as a means of socio-political change.
+          </p>
+        </div>
+        <div class="practice__meta">
+          Method<br>
+          Multi-disciplinary
+        </div>
+      </li>
+
+      <li class="practice__item">
+        <div class="practice__year">2022 →</div>
+        <div class="practice__title-block">
+          <h3 class="practice__title">Show <span style="color:var(--terracotta)">+</span> Tell <span style="color:var(--terracotta)">+</span> Share</h3>
+          <span class="practice__role">Contributor, V&amp;A Blog</span>
+          <p class="practice__desc">
+            Writing for the Victoria &amp; Albert Museum's blog — short essays on
+            objects, exhibitions and the practices of display, attention and
+            cultural memory.
+          </p>
+        </div>
+        <div class="practice__meta">
+          Writing<br>
+          Museology
+        </div>
+      </li>
+
+      <li class="practice__item">
+        <div class="practice__year">Sept 2022</div>
+        <div class="practice__title-block">
+          <h3 class="practice__title">East Bank: A New Cultural Identity</h3>
+          <span class="practice__role">Expert Panel · New London Architecture</span>
+          <p class="practice__desc">
+            Joined the NLA expert panel on East Bank — the cultural quarter
+            taking shape at Queen Elizabeth Olympic Park — to consider what a
+            new cultural identity in London can be, who it speaks to, and on
+            whose terms.
+          </p>
+        </div>
+        <div class="practice__meta">
+          Panel<br>
+          Architecture
+        </div>
+      </li>
+
+    </ol>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- III. POETRY & PERFORMANCE  · full bleed, deep register     -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="poetry" class="section poetry">
+  <div class="wrap">
+    <header class="section__head" data-reveal>
+      <div class="section__index">iii</div>
+      <h2 class="section__title">Poetry &amp; Performance</h2>
+      <p class="section__rubric">Spoken word, written commissions &amp; live work</p>
+    </header>
+
+    <div class="poetry__layout">
+
+      <div class="poetry__feature" data-reveal>
+        <p class="poetry__verse">
+          <span class="v-line"><span class="v-mark">·</span> in common, we gather —</span>
+          <span class="v-line v-indent">a village, a gallery,</span>
+          <span class="v-line">the night holding its breath</span>
+          <span class="v-line v-indent-2">for whoever steps up first.</span>
+        </p>
+
+        <p class="poetry__credit">
+          <strong>The Night Gallery</strong><br>
+          Brixton Village &nbsp;·&nbsp; London Festival of Architecture
+        </p>
+      </div>
+
+      <aside class="poetry__side" data-reveal>
+        <p class="poetry__theme">In Common</p>
+        <p class="poetry__note">
+          A spoken word performance for an architecture festival that asked
+          what we share, who we share it with, and what a city can mean when
+          built from the ground up — by, with, and for its people.
+        </p>
+      </aside>
+
+      <div class="poetry__divider" aria-hidden="true"></div>
+
+      <div class="poetry__second" data-reveal>
+        <div class="label">On practice</div>
+        <p class="body">
+          Poetry, for Maia, is not separate from the rest of the work — it is
+          the same instrument turned a different way. The same belief in
+          gathering, the same listening, the same insistence on cultural
+          participation as a form of repair.
+        </p>
+        <div class="meta">Spoken Word<br>Ongoing</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- IV. CORRESPONDENCE                                        -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="contact" class="section contact">
+  <div class="wrap">
+    <header class="section__head" data-reveal>
+      <div class="section__index">iv</div>
+      <h2 class="section__title">Correspondence</h2>
+      <p class="section__rubric">For collaborations, commissions &amp; conversations</p>
+    </header>
+
+    <div class="contact__layout">
+      <p class="contact__intro" data-reveal>
+        For <em>writing commissions</em>, <em>co-design partnerships</em>,
+        panels, programming and the occasional poem — say hello.
+      </p>
+
+      <div class="contact__links" data-reveal>
+        <a class="contact__link"
+           href="https://www.linkedin.com/in/maia-ojerinde-ardalla"
+           rel="noopener noreferrer"
+           target="_blank"
+           aria-label="LinkedIn — Maia Ojerinde Ardalla">
+          <span class="n">i.</span>
+          <span class="name">LinkedIn · maia-ojerinde-ardalla</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <p class="contact__closing">
+        Letters welcome; replies in season.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- COLOPHON                                                  -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<footer class="colophon">
+  <div class="wrap">
+    <div class="colophon__left">
+      © MMXXVI &nbsp;Maia Ojerinde Ardalla
+    </div>
+    <div class="colophon__center" aria-hidden="true">❦</div>
+    <div class="colophon__right">
+      Set in editorial serif &nbsp;·&nbsp; London
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ──────────────────────────────────────────────────────────
+     Reveal-on-scroll · IntersectionObserver
+     respects prefers-reduced-motion (CSS resets opacity to 1)
+     ────────────────────────────────────────────────────────── */
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nodes  = document.querySelectorAll('[data-reveal]');
+    if (reduce || !('IntersectionObserver' in window)) {
+      nodes.forEach(function (n) { n.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    nodes.forEach(function (n) { io.observe(n); });
+  })();
+
+  /* ──────────────────────────────────────────────────────────
+     Update the year in the colophon if you ever cross years.
+     (Keep MMXXVI baseline; only updates if newer than 2026.)
+     ────────────────────────────────────────────────────────── */
+  (function () {
+    var y = new Date().getFullYear();
+    if (y > 2026) {
+      var roman = { 2027: 'MMXXVII', 2028: 'MMXXVIII', 2029: 'MMXXIX', 2030: 'MMXXX' };
+      var left = document.querySelector('.colophon__left');
+      if (left && roman[y]) {
+        left.firstChild.nodeValue = '© ' + roman[y] + '  ';
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
